@@ -1,13 +1,25 @@
 import React from 'react';
 import {render} from 'react-dom'
-import injectTapEventPlugin from 'react-tap-event-plugin';
-import Card from './components/Card'
+import {
+  BrowserRouter as Router,
+  Route
+} from 'react-router-dom'
+import { Provider } from 'react-redux'
+import Landing from './pages/Landing'
+import Product from './pages/Product'
+import Header from './components/Header'
+import store from './store'
 
-injectTapEventPlugin();
-
-const App = () => <div>
-	<Card bodyText="หุ่นดีได้ด้วยวิธีเดียวเท่านั้น คือการ กินดี ออกกำลังกายดีแต่ว่าเราจะมีวิธีอะไรในการ กินโปรตืนให้เพียงพอ? หลากหลายพอ? WheggNogg คือการผสมผสานระหว่างโปรตีนจากไข่, เวย์, และ กล้วย"/>
-</div>
+const App = () => (<Provider store={store}>
+	<Router>
+		<Header>
+			<Route exact path="/" component={Landing} />
+			<Route path="/product" component={Product} />
+		</Header>
+	</Router>
+</Provider>)
 
 render(
-		<App/>, document.getElementById("app"))
+		<div id="root">
+		<App/>
+		</div>, document.getElementById("app"))

@@ -2,17 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import ProductComponent from '../components/Product'
 import { addQuantityToOrder, addProductToCart} from '../actions/product'
+import isProductExistInCart from '../utils/product'
 
 class Product extends Component {
-
-	isProductExistInCart(cartItems, productId) {
-		Object.keys(cartItems).forEach( key => {
-			if( cartItems[key].product === productId){
-				return productId
-			}
-		})
-		return false
-	}
 
 	render(){
 		const productId = 0

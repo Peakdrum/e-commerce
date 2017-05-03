@@ -22,14 +22,30 @@ function cart( state = initialState, action ) {
 				{ ...state,
 					cartItems:
 						state.cartItems.slice(0, payload.productOrder ).concat(
-						{
-							product: state.cartItems[payload.productOrder].product,
+						{	...state.cartItems[payload.productOrder],
 							quantity: state.cartItems[payload.productOrder].quantity + 1
 						}
 					).concat(
 						state.cartItems.slice(payload.productOrder + 1, state.cartItems.length)
 					)
 				})
+		case types.MINUS_QUANTITY_FROM_ORDER:
+			return state.cartItems[payload.productOrder]?
+			(
+				state.cartItems[payload.productOrder].quantity !== 0 ?
+				{
+					...state,
+					cartItems:
+						state.cartItems.slice(0, payload.productOrder).concat(
+							{
+								...state.cartItems[payload.productOrder],
+								quantity: state.cartItems[payload.productOrder].quantity - 1
+							}
+						).concat(
+							state.cartItems.slice(payload.productOrder + 1, state.cartItems.length)
+						)
+				} : state
+			) : state
 		default: 
 			return state
 	}

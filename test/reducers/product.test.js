@@ -65,8 +65,72 @@ describe('Product Reducers', function() {
 					}
 				]
 			}
+			expect(nextState.cartItems[0].product).to.equal(1)
 			expect(nextState).to.deep.equal(expectedNextState)
 			expect(state).to.be.frozen
+		})
+	})
+
+	describe('minus quantity from order', ()=>{
+		it('subtract order when the product not exist in cart', ()=>{
+			const state = Object.freeze({
+				cartItems:[]
+			})
+			const action = {
+				type : types.MINUS_QUANTITY_FROM_ORDER,
+				payload : {
+					productOrder : 0
+				}
+			}
+			var nextState = cart(state, action) 
+			expect(nextState).to.deep.equal(state)
+		})
+
+		it('substract order when the product order exist', ()=>{
+			const state = Object.freeze({
+				cartItems: [
+					{
+						product: 3,
+						quantity: 4
+					}
+				]
+			})
+			const action = {
+				type: types.MINUS_QUANTITY_FROM_ORDER,
+				payload: {
+					productOrder: 0
+				}
+			}
+			var nextState = cart(state, action)
+			const expectedNextState = {
+				cartItems: [
+					{
+						product: 3,
+						quantity: 3
+					}
+				]
+			}
+			expect(nextState).to.deep.equal(expectedNextState)
+		})
+
+		it('substract from existing order with zero quantity no state change', ()=>{
+			const state = {
+				cartItems : [
+					{
+						product: 3,
+						quantity: 0
+					}
+				]
+			}
+			const action = {
+				type: types.MINUS_QUANTITY_FROM_ORDER,
+				payload: {
+					productOrder: 0
+				}
+			}
+
+			var nextState = cart(state, action)
+			expect(nextState).to.equal(state)
 		})
 	})
 

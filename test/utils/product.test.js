@@ -11,6 +11,7 @@ describe('Product Utils', ()=>{
             var result = isProductExistInCart(cartItems, productId)
             expect(result).to.be.false
         })
+
         it('should return Order Number If Product Exist', ()=> {
             const cartItems = [
                 {
@@ -22,9 +23,16 @@ describe('Product Utils', ()=>{
                     quantity:3
                 }
             ]
-            const productId = 3
+            const productId = 4
             var result = isProductExistInCart(cartItems, productId)
-            expect(result).to.equal(0)
+            expect(result).to.equal('1')
+        })
+
+        it('cart item is undefined return false ', ()=> {
+            var productId = 0 
+            var cartItems = undefined
+            var result = isProductExistInCart(cartItems, productId)
+            expect(result).to.be.false
         })
     })
 })
